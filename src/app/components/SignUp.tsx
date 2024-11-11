@@ -10,6 +10,7 @@ const SignUp = ({ handleRegiOrLogin }: SignUpProps) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ const SignUp = ({ handleRegiOrLogin }: SignUpProps) => {
         username,
         email,
         password,
+        confirmPassword,
       });
       alert("회원가입 성공!");
       handleRegiOrLogin();
@@ -58,6 +60,13 @@ const SignUp = ({ handleRegiOrLogin }: SignUpProps) => {
           placeholder="비밀번호"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="비밀번호 확인"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
         <Button text="회원가입" type="submit" />
