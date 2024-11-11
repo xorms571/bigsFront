@@ -35,7 +35,6 @@ const Board = ({ logout }: BoardProps) => {
   const [category, setCategory] = useState(categories[0]);
   const [createCategory, setCreateCategory] = useState(createCategories[0]);
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
-  const [postsPerPage, setPostsPerPage] = useState(6); // 페이지당 보여줄 게시물 수
 
   // 게시판 목록 불러오기
   const fetchBoards = async () => {
@@ -182,6 +181,7 @@ const Board = ({ logout }: BoardProps) => {
   });
 
   // 현재 페이지에 해당하는 게시물 가져오기
+  const postsPerPage = 6; // 페이지당 보여줄 게시물 수
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentBoards = filteredBoards.slice(
