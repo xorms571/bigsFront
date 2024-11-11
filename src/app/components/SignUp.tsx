@@ -61,7 +61,7 @@ const SignUp = ({ handleRegiOrLogin }: SignUpProps) => {
 
   return (
     <>
-      <form onSubmit={handleRegister} className="h-48">
+      <form onSubmit={handleRegister} className="h-56">
         <h2>회원가입</h2>
         <input
           type="text"
