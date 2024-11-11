@@ -40,11 +40,6 @@ const Board = ({ logout }: BoardProps) => {
   const fetchBoards = async () => {
     try {
       const token = localStorage.getItem("accessToken");
-      if (!token) {
-        alert("로그인을 하세요.");
-        window.location.href = "/";
-        return;
-      }
       const response = await api.get("/boards", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -155,7 +150,7 @@ const Board = ({ logout }: BoardProps) => {
       setUser({ username: storedUsername, id: userId });
     }
     fetchBoards();
-  }, []);
+  }, [fetchBoards]);
 
   const isWritingHandler = () => {
     setIsWriting(!isWriting);
