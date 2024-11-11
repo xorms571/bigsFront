@@ -29,7 +29,7 @@ const SignIn = ({ onLogin }: SignInProps) => {
 
   return (
     <>
-      <form onSubmit={handleLogin} className="h-44">
+      <form onSubmit={handleLogin} className="h-48">
         <h2>로그인</h2>
         <input
           type="email"
