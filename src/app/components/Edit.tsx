@@ -1,3 +1,4 @@
+import Button from "./Button";
 import Category from "./Category";
 
 type EditProps = {
@@ -41,7 +42,7 @@ const Edit = ({
         required
       />
       <div>
-        <button type="submit">완료</button>
+        <Button text="완료" type="submit"/>
       </div>
     </form>
   );

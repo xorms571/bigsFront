@@ -1,6 +1,7 @@
 "use client"
 import React, { Dispatch, SetStateAction, useState } from "react";
 import api from "../api";
+import Button from "./Button";
 type SignUpProps = {
   handleRegiOrLogin: () => void
 }
@@ -54,7 +55,7 @@ const SignUp = ({handleRegiOrLogin}:SignUpProps) => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" className="hover:shadow">회원가입</button>
+        <Button text="회원가입" type="submit"/>
       </form>
     </>
   );

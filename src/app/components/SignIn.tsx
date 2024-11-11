@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react";
 import api from "../api";
+import Button from "./Button";
 type SignInProps = {
   onLogin: (isLoggedIn: boolean) => void;
 };
@@ -44,9 +45,7 @@ const SignIn = ({ onLogin }: SignInProps) => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" className="hover:shadow">
-          로그인
-        </button>
+        <Button text="로그인" type="submit"/>
       </form>
     </>
   );

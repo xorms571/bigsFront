@@ -18,27 +18,32 @@ body {
   color: var(--backgroun);
   background: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 5% 0;
+  width: 95%;
 }
 
-html{
+html {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-button{
+button {
   width: fit-content;
   border: 1px solid black;
   border-radius: 5px;
   padding: 0 20px;
 }
-input{
+input {
   border: 1px solid black;
   border-radius: 5px;
   padding: 0 10px;
 }
-textarea{
+textarea {
   border: 1px solid black;
   border-radius: 5px;
   padding: 10px;
@@ -46,17 +51,69 @@ textarea{
   resize: none;
   overflow-y: scroll;
 }
-h1{font-size: xx-large;}
-h2{font-size: x-large; font-weight: 900;}
-h3{font-size: large;}
-form{
+h2 {
+  font-size: x-large;
+  font-weight: 900;
+}
+form {
   display: flex;
   flex-direction: column;
   align-items: end;
   gap: 12px;
   height: calc(100% - 52px);
 }
-.delEditBtn button{padding: 2px 10px;}
-form>input,form>h2,form>textarea {
+.delEditBtn button {
+  padding: 2px 10px;
+}
+form > input,
+form > h2,
+form > textarea {
   width: 100%;
+}
+@media (max-width: 900px) {
+  html {
+    display: block;
+  }
+  body {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+  }
+  .allContainer {
+    gap: 0;
+    height: auto;
+    flex-direction: column-reverse;
+  }
+  .boardContainer {
+    border: none;
+    height: fit-content;
+    background: none;
+    padding: 16px 0;
+  }
+  .boardContainer > div,
+  .board > p,
+  .boardContainer > form {
+    padding: 0 16px;
+  }
+  .board > li {
+    padding: 16px;
+  }
+  .signContainer {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  .signContainer > form {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+  }
+  .userInfo {
+    border: none;
+    max-width: 100%;
+    height: fit-content;
+    background: none;
+    text-align: start;
+  }
 }

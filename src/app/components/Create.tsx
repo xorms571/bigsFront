@@ -1,3 +1,4 @@
+import Button from "./Button";
 import Category from "./Category";
 
 type CreateProps = {
@@ -43,7 +44,7 @@ const Create = ({
         onChange={(e) => setContent(e.target.value)}
         required
       />
-      <button type="submit">작성</button>
+      <Button text="작성" type="submit" />
     </form>
   );
 };

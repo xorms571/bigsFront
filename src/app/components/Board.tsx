@@ -3,6 +3,7 @@ import api from "../api";
 import Edit from "./Edit";
 import Create from "./Create";
 import Category from "./Category";
+import Button from "./Button";
 type BoardProps = {
   logout: () => void;
 };
@@ -115,7 +116,7 @@ const Board = ({ logout }: BoardProps) => {
     try {
       const response = await api.put(
         `/boards/${editBoardId}`,
-        { title, content },
+        { title, content, category },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -160,7 +161,7 @@ const Board = ({ logout }: BoardProps) => {
   });  
 
   return (
-    <div className="bg-white board-container w-full border border-black rounded-md p-4 h-full">
+    <div className="bg-white boardContainer w-full border border-black rounded-md p-4 h-full">
       <div className="flex justify-between items-start mb-3">
         <h2>
           {isWriting ? `게시물 ${editMode ? "수정" : "작성"}` : category+" 게시판"}
@@ -214,12 +215,8 @@ const Board = ({ logout }: BoardProps) => {
                 <p className="text-sm font-extrabold">카테고리 : {board.category}</p>
                 {user && user.id === board.authorId && (
                   <div className="text-xs delEditBtn">
-                    <button onClick={() => handleEdit(board)} className="mr-2">
-                      수정
-                    </button>
-                    <button onClick={() => handleDelete(board._id)}>
-                      삭제
-                    </button>
+                    <Button text="수정" onClick={() => handleEdit(board)} className="mr-2"/>
+                    <Button text="삭제" onClick={() => handleDelete(board._id)}/>
                   </div>
                 )}
               </div>
