@@ -169,7 +169,7 @@ const Board = ({ logout }: BoardProps) => {
       setUser({ username: storedUsername, id: userId });
     }
     fetchBoards();
-  }, [fetchBoards]);
+  }, []);
 
   const isWritingHandler = () => {
     setIsWriting(!isWriting);

@@ -1,31 +1,36 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import api from "../api";
 import Button from "./Button";
+import { AxiosError } from "axios";
 type SignUpProps = {
-  handleRegiOrLogin: () => void
-}
-const SignUp = ({handleRegiOrLogin}:SignUpProps) => {
+  handleRegiOrLogin: () => void;
+};
+const SignUp = ({ handleRegiOrLogin }: SignUpProps) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegister = async (e:React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await api.post("/auth/register", { 
-        username, 
-        email, 
-        password 
+      const response = await api.post("/auth/register", {
+        username,
+        email,
+        password,
       });
       alert("회원가입 성공!");
-      handleRegiOrLogin()
+      handleRegiOrLogin();
       console.log(response.data);
-    } catch (error:any) {
-      if (error.response) {
-        console.error("회원가입 오류:", error.response.data.message);
-      } else {
-        console.error("회원가입 중 오류:", error.message);
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        if (error.response) {
+          console.error("회원가입 오류:", error.response.data.message);
+        } else {
+          console.error("회원가입 중 오류:", error.message);
+        }
+      }else{
+        console.error(error);
       }
     }
   };
@@ -33,7 +38,7 @@ const SignUp = ({handleRegiOrLogin}:SignUpProps) => {
   return (
     <>
       <form onSubmit={handleRegister} className="h-44">
-      <h2>회원가입</h2>
+        <h2>회원가입</h2>
         <input
           type="text"
           placeholder="닉네임"
@@ -55,7 +60,7 @@ const SignUp = ({handleRegiOrLogin}:SignUpProps) => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <Button text="회원가입" type="submit"/>
+        <Button text="회원가입" type="submit" />
       </form>
     </>
   );
