@@ -27,11 +27,33 @@ const SignUp = ({ handleRegiOrLogin }: SignUpProps) => {
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         if (error.response) {
-          console.error("회원가입 오류:", error.response.data.message);
+          const errorCode = error.response.data.code;
+          const errorMessage = error.response.data.message;
+          switch (errorCode) {
+            case "MISSING_FIELDS":
+              alert(errorMessage);
+              break;
+            case "PASSWORD_MISMATCH":
+              alert(errorMessage);
+              break;
+            case "INVALID_PASSWORD":
+              alert(
+                errorMessage
+              );
+              break;
+            case "EMAIL_EXISTS":
+              alert(errorMessage);
+              break;
+            default:
+              alert(errorMessage);
+          }
         } else {
-          console.error("회원가입 중 오류:", error.message);
+          console.error("네트워크 오류:", error);
+          alert(
+            "서버와의 연결에 문제가 발생했습니다. 나중에 다시 시도해주세요."
+          );
         }
-      }else{
+      } else {
         console.error(error);
       }
     }
