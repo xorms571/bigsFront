@@ -22,19 +22,22 @@ const Edit = ({
   handleCategory,
 }: EditProps) => {
   return (
-    <form onSubmit={handleUpdate}>
-      <Category
-        categories={categories}
-        category={category}
-        handleCategory={handleCategory}
-      />
-      <input
-        type="text"
-        placeholder="제목"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      />
+    <form onSubmit={handleUpdate} className="editForm">
+      <div className="flex gap-3 w-full">
+        <input
+          className="w-full"
+          type="text"
+          placeholder="제목"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+        <Category
+          categories={categories}
+          category={category}
+          handleCategory={handleCategory}
+        />
+      </div>
       <textarea
         placeholder="내용"
         value={content}

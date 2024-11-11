@@ -22,7 +22,7 @@ const Create = ({
   category,
 }: CreateProps) => {
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="createForm">
       <div className="flex gap-3 w-full">
         <input
           className="w-full"
