@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "bigsback-production.up.railway.app",
   withCredentials: true,  // 쿠키를 전송할 수 있도록 설정
 });
 
