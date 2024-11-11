@@ -5,6 +5,7 @@ import Create from "./Create";
 import Category from "./Category";
 import Button from "./Button";
 import Pagination from "./Pagination";
+import { AxiosError } from "axios";
 type BoardProps = {
   logout: () => void;
 };
@@ -46,14 +47,20 @@ const Board = ({ logout }: BoardProps) => {
         },
       });
       setBoards(response.data);
-    } catch (error: any) {
-      console.error("게시판 불러오기 오류:", error);
-      if (error.response && error.response.status === 403) {
-        console.log("토큰 만료.");
-        localStorage.removeItem("accessToken");
-        logout();
-        window.location.href = "/";
-      } else console.log("오류");
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        console.error("게시판 불러오기 오류:", error);
+        if (error.response && error.response.status === 403) {
+          console.log("토큰 만료.");
+          localStorage.removeItem("accessToken");
+          logout();
+          window.location.href = "/";
+        } else {
+          console.log(error);
+        }
+      } else {
+        console.error(error);
+      }
     }
   };
 
@@ -81,7 +88,7 @@ const Board = ({ logout }: BoardProps) => {
     try {
       const response = await api.post(
         "/boards",
-        { title, content, category:createCategory },
+        { title, content, category: createCategory },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -91,14 +98,20 @@ const Board = ({ logout }: BoardProps) => {
       setIsWriting(false);
       fetchBoards();
       console.log(response.data);
-    } catch (error: any) {
-      console.error("게시물 작성 오류:", error);
-      if (error.response && error.response.status === 403) {
-        console.log("토큰 만료.");
-        localStorage.removeItem("accessToken");
-        logout();
-        window.location.href = "/";
-      } else console.log("오류");
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        console.error("게시판 작성 오류:", error);
+        if (error.response && error.response.status === 403) {
+          console.log("토큰 만료.");
+          localStorage.removeItem("accessToken");
+          logout();
+          window.location.href = "/";
+        } else {
+          console.log(error);
+        }
+      } else {
+        console.error(error);
+      }
     }
   };
 
@@ -118,7 +131,7 @@ const Board = ({ logout }: BoardProps) => {
     try {
       const response = await api.put(
         `/boards/${editBoardId}`,
-        { title, content, category:createCategory },
+        { title, content, category: createCategory },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -131,14 +144,20 @@ const Board = ({ logout }: BoardProps) => {
       fetchBoards();
       setIsWriting(false);
       console.log(response.data);
-    } catch (error: any) {
-      console.error("게시물 수정 오류:", error);
-      if (error.response && error.response.status === 403) {
-        console.log("토큰 만료.");
-        localStorage.removeItem("accessToken");
-        logout();
-        window.location.href = "/";
-      } else console.log("오류");
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        console.error("게시판 수정 오류:", error);
+        if (error.response && error.response.status === 403) {
+          console.log("토큰 만료.");
+          localStorage.removeItem("accessToken");
+          logout();
+          window.location.href = "/";
+        } else {
+          console.log(error);
+        }
+      } else {
+        console.error(error);
+      }
     }
   };
 
@@ -179,12 +198,9 @@ const Board = ({ logout }: BoardProps) => {
   const postsPerPage = 6; // 페이지당 보여줄 게시물 수
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentBoards = filteredBoards.slice(
-    indexOfFirstPost,
-    indexOfLastPost
-  );
-// 페이지 변경 함수
-const paginate = (pageNumber:number) => setCurrentPage(pageNumber);
+  const currentBoards = filteredBoards.slice(indexOfFirstPost, indexOfLastPost);
+  // 페이지 변경 함수
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   return (
     <div className="bg-white boardContainer flex flex-col justify-between w-full border border-black rounded-md py-4 h-full">
       <div className="flex justify-between items-start mb-3">
@@ -240,7 +256,9 @@ const paginate = (pageNumber:number) => setCurrentPage(pageNumber);
             {currentBoards.map((board, i) => (
               <li
                 key={board._id}
-                className={`${i===0&&'border-t'} h-1/6 border-b border-black flex flex-col justify-center`}
+                className={`${
+                  i === 0 && "border-t"
+                } h-1/6 border-b border-black flex flex-col justify-center`}
               >
                 <div className="h-8 flex items-center justify-between mb-3">
                   <div className="text-xs">
