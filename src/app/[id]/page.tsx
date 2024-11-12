@@ -6,34 +6,22 @@ import Button from "../components/Button";
 import api from "../utils/api";
 import { AxiosError } from "axios";
 import Edit from "../components/Edit";
+import { useAuth } from "../utils/authFunctions";
+import { boardsFunctions } from "../utils/boardsFunction";
 
 const Page = () => {
+  const { handleLogout } = useAuth();
+  const { createCategories, setEditMode, editMode } = boardsFunctions();
   const router = useRouter();
-  const [editMode, setEditMode] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentTitle, setTitle] = useState("");
   const [currentContent, setContent] = useState("");
-  const createCategories = ["notice", "free"];
   const searchParams = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState(createCategories[0]);
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("username");
-    localStorage.removeItem("email");
-    localStorage.removeItem("userId");
-    setIsLoggedIn(false);
-  };
-  // URL에서 모든 쿼리 파라미터를 객체로 가져오기
   const params = Object.fromEntries(searchParams.entries());
-
-  // 이제 params 객체에서 필요한 값을 추출할 수 있습니다
   const { category, authorId, createdAt, title, content, userId } = params;
 
   const pathname = usePathname();
   const postId = pathname.split("/")[1];
-  const handleCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCategory(e.currentTarget.value);
-  };
   const handleCurrentEdit = () => {
     setEditMode(true);
     setTitle(title);
@@ -43,7 +31,7 @@ const Page = () => {
     e.preventDefault();
     const token = localStorage.getItem("accessToken");
     try {
-      const response = await api.put(
+      await api.put(
         `/boards/${postId}`,
         {
           title: currentTitle,
