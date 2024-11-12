@@ -7,7 +7,7 @@ import BoardTop from "./components/BoardTop";
 import Board from "./components/Board";
 import { useRouter } from "next/navigation";
 import { useAuth } from "./utils/authFunctions";
-import { boardsFunctions } from "./utils/boardsFunction";
+import { useBoards } from "./utils/boardsFunctions";
 
 export default function Home() {
   const router = useRouter();
@@ -44,7 +44,7 @@ export default function Home() {
     handleSubmit,
     handleUpdate,
     setEditBoardId,
-  } = boardsFunctions();
+  } = useBoards();
 
   const isWritingHandler = () => {
     setIsWriting(!isWriting);
@@ -73,7 +73,7 @@ export default function Home() {
     content: string,
     userId: string
   ) => {
-    router &&
+    if (router) {
       router.push(
         `/${_id}?category=${encodeURIComponent(
           category
@@ -84,8 +84,9 @@ export default function Home() {
         )}&title=${encodeURIComponent(title)}&content=${encodeURIComponent(
           content
         )}&userId=${encodeURIComponent(userId)}
-        `
+      `
       );
+    }
   };
 
   const handleCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {

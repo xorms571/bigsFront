@@ -4,7 +4,7 @@ import { AxiosError } from "axios";
 import api from "./api";
 import { useAuth } from "./authFunctions";
 
-export const boardsFunctions = () => {
+export const useBoards = () => {
   const pageSize = 6;
   const [boards, setBoards] = useState<Board[]>([]);
   const [user, setUser] = useState<User | null>(null);

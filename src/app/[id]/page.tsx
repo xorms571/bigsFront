@@ -7,11 +7,11 @@ import api from "../utils/api";
 import { AxiosError } from "axios";
 import Edit from "../components/Edit";
 import { useAuth } from "../utils/authFunctions";
-import { boardsFunctions } from "../utils/boardsFunction";
+import { useBoards } from "../utils/boardsFunctions";
 
 const Page = () => {
   const { handleLogout } = useAuth();
-  const { createCategories, setEditMode, editMode } = boardsFunctions();
+  const { createCategories, setEditMode, editMode } = useBoards();
   const router = useRouter();
   const [currentTitle, setTitle] = useState("");
   const [currentContent, setContent] = useState("");

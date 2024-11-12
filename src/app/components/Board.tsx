@@ -53,13 +53,17 @@ const Board = ({
   };
 
   const handleNextPage = () => {
-    page < totalPages && setPage(page + 1);
+    if (page < totalPages) {
+      setPage(page + 1);
+    }
   };
-
-
+  
   const handlePrevPage = () => {
-    page > 1 && setPage(page - 1);
+    if (page > 1) {
+      setPage(page - 1);
+    }
   };
+  
   const props = {
     handleNextPage,
     handlePrevPage,
