@@ -150,19 +150,20 @@ export const useBoards = () => {
     }
   };
 
-  if (typeof window !== "undefined") {
-    const storedUsername = localStorage.getItem("username");
-    const userId = localStorage.getItem("userId");
-    useEffect(() => {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUsername = localStorage.getItem("username");
+      const userId = localStorage.getItem("userId");
       if (storedUsername && userId) {
         setUser({ username: storedUsername, id: userId });
       }
       fetchBoards(1, pageSize, category);
-    }, []);
-    useEffect(() => {
-      fetchBoards(page, pageSize, category);
-    }, [page]);
-  }
+    }
+  }, []);
+  useEffect(() => {
+    fetchBoards(page, pageSize, category);
+  }, [page]);
+  
   return {
     boards,
     fetchBoards,
