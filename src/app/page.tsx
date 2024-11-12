@@ -1,3 +1,4 @@
+"use client"
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import UserInfo from "./components/UserInfo";
