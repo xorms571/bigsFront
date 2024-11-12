@@ -1,4 +1,3 @@
-"use client";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import UserInfo from "./components/UserInfo";
@@ -107,7 +106,7 @@ export default function Home() {
       fetchBoards(1, pageSize, category);
 
       const token = localStorage.getItem("accessToken");
-      if (token) setIsLoggedIn(true);
+      if (token) handleLoginStatus(true)
     }
   }, []);
 
