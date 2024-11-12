@@ -18,7 +18,6 @@ export default function Home() {
     handleRegiOrLogin,
     isLoggedIn,
     regiOrLogin,
-    setIsLoggedIn,
   } = useAuth();
   const {
     boards,
