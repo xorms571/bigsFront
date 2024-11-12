@@ -3,13 +3,14 @@ import { useState } from "react";
 import api from "../utils/api";
 import Button from "./Button";
 import { AxiosError } from "axios";
+import { useBoards } from "../utils/boardsFunctions";
 type SignInProps = {
   onLogin: (isLoggedIn: boolean) => void;
 };
 const SignIn = ({ onLogin }: SignInProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const { fetchBoards, pageSize, category } = useBoards();
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -22,6 +23,7 @@ const SignIn = ({ onLogin }: SignInProps) => {
       localStorage.setItem("username", username);
       localStorage.setItem("userId", userId);
       onLogin(true);
+      fetchBoards(1, pageSize, category);
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response) {
