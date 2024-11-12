@@ -2,7 +2,7 @@ import Category from "./Category";
 import Button from "./Button";
 import Pagination from "./Pagination";
 import type { Board, User } from "../utils/interface";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 type BoardProps = {
   categories: string[];
   category: string;

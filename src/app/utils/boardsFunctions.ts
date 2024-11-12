@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Board, User } from "./interface";
 import { AxiosError } from "axios";
 import api from "./api";
@@ -150,20 +150,6 @@ export const useBoards = () => {
     }
   };
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedUsername = localStorage.getItem("username");
-      const userId = localStorage.getItem("userId");
-      if (storedUsername && userId) {
-        setUser({ username: storedUsername, id: userId });
-      }
-      fetchBoards(1, pageSize, category);
-    }
-  }, []);
-  useEffect(() => {
-    fetchBoards(page, pageSize, category);
-  }, [page]);
-  
   return {
     boards,
     fetchBoards,
@@ -191,5 +177,6 @@ export const useBoards = () => {
     createCategory,
     setEditBoardId,
     handleUpdate,
+    setUser,
   };
 };

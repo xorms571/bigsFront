@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 export const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [regiOrLogin, setRegiOrLogin] = useState(true);
@@ -15,12 +15,6 @@ export const useAuth = () => {
   const handleRegiOrLogin = () => {
     setRegiOrLogin(!regiOrLogin);
   };
-  useEffect(() => {
-    if (typeof window !== "undefined"){
-      const token = localStorage.getItem("accessToken");
-      if(token) setIsLoggedIn(true);
-    }
-  }, []);
   return {
     isLoggedIn,
     handleLoginStatus,

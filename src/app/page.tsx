@@ -8,6 +8,7 @@ import Board from "./components/Board";
 import { useRouter } from "next/navigation";
 import { useAuth } from "./utils/authFunctions";
 import { useBoards } from "./utils/boardsFunctions";
+import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
@@ -17,6 +18,7 @@ export default function Home() {
     handleRegiOrLogin,
     isLoggedIn,
     regiOrLogin,
+    setIsLoggedIn,
   } = useAuth();
   const {
     boards,
@@ -44,6 +46,7 @@ export default function Home() {
     handleSubmit,
     handleUpdate,
     setEditBoardId,
+    setUser,
   } = useBoards();
 
   const isWritingHandler = () => {
@@ -93,6 +96,24 @@ export default function Home() {
     setCategory(e.currentTarget.value);
     fetchBoards(1, pageSize, e.currentTarget.value);
   };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUsername = localStorage.getItem("username");
+      const userId = localStorage.getItem("userId");
+      if (storedUsername && userId) {
+        setUser({ username: storedUsername, id: userId });
+      }
+      fetchBoards(1, pageSize, category);
+
+      const token = localStorage.getItem("accessToken");
+      if (token) setIsLoggedIn(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchBoards(page, pageSize, category);
+  }, [page]);
 
   const props = {
     handleUpdate,
