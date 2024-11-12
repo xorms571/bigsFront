@@ -16,8 +16,10 @@ export const useAuth = () => {
     setRegiOrLogin(!regiOrLogin);
   };
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    if(token) setIsLoggedIn(true);
+    if (typeof window !== "undefined"){
+      const token = localStorage.getItem("accessToken");
+      if(token) setIsLoggedIn(true);
+    }
   }, []);
   return {
     isLoggedIn,

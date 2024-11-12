@@ -29,27 +29,29 @@ const Page = () => {
   };
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
-    const token = localStorage.getItem("accessToken");
     try {
-      await api.put(
-        `/boards/${postId}`,
-        {
-          title: currentTitle,
-          content: currentContent,
-          category: selectedCategory,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      alert("게시물 수정 완료.");
-      router.push(
-        `${pathname}?category=${category}&authorId=${authorId}&createdAt=${createdAt}&title=${currentTitle}&content=${currentContent}&userId=${userId}`
-      );
-      setTitle(currentTitle);
-      setContent(currentContent);
-      setSelectedCategory(category);
-      setEditMode(false);
+      if (typeof window !== "undefined") {
+        const token = localStorage.getItem("accessToken");
+        await api.put(
+          `/boards/${postId}`,
+          {
+            title: currentTitle,
+            content: currentContent,
+            category: selectedCategory,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        alert("게시물 수정 완료.");
+        router.push(
+          `${pathname}?category=${category}&authorId=${authorId}&createdAt=${createdAt}&title=${currentTitle}&content=${currentContent}&userId=${userId}`
+        );
+        setTitle(currentTitle);
+        setContent(currentContent);
+        setSelectedCategory(category);
+        setEditMode(false);
+      }
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         console.error("게시판 수정 오류:", error);
@@ -66,14 +68,16 @@ const Page = () => {
 
   const handleCurrentDelete = async () => {
     try {
-      const token = localStorage.getItem("accessToken");
-      await api.delete(`/boards/${postId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      alert("게시물 삭제 완료.");
-      router.push("/");
+      if (typeof window !== "undefined"){
+        const token = localStorage.getItem("accessToken");
+        await api.delete(`/boards/${postId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        alert("게시물 삭제 완료.");
+        router.push("/");
+      }
     } catch (error) {
       console.error("게시물 삭제 오류:", error);
     }
