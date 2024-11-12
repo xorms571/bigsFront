@@ -22,7 +22,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  padding: 4% 0;
+  padding: 16px 0;
   width: 95%;
 }
 
@@ -30,7 +30,6 @@ html {
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 button {
   width: fit-content;
@@ -119,7 +118,10 @@ form > textarea {
     background: none;
     text-align: start;
   }
-  .createForm{
-    height: 100%;
+  .createForm > textarea {
+    height: calc(100vh - 280px);
+  }
+  .editForm > textarea {
+    height: calc(100vh - 280px);
   }
 }

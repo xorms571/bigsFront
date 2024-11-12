@@ -1,5 +1,4 @@
 import Button from "./Button";
-import Category from "./Category";
 
 type EditProps = {
   title: string;
@@ -7,9 +6,6 @@ type EditProps = {
   content: string;
   setContent: (content: string) => void;
   handleUpdate: (e: React.FormEvent) => void;
-  handleCategory: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  categories: string[];
-  category: string;
 };
 const Edit = ({
   handleUpdate,
@@ -17,9 +13,6 @@ const Edit = ({
   setTitle,
   content,
   setContent,
-  categories,
-  category,
-  handleCategory,
 }: EditProps) => {
   return (
     <form onSubmit={handleUpdate} className="editForm">
@@ -32,11 +25,6 @@ const Edit = ({
           onChange={(e) => setTitle(e.target.value)}
           required
         />
-        <Category
-          categories={categories}
-          category={category}
-          handleCategory={handleCategory}
-        />
       </div>
       <textarea
         placeholder="내용"
@@ -45,7 +33,7 @@ const Edit = ({
         required
       />
       <div>
-        <Button text="완료" type="submit"/>
+        <Button text="완료" type="submit" />
       </div>
     </form>
   );

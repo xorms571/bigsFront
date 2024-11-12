@@ -1,40 +1,148 @@
 "use client";
-import { useEffect, useState } from "react";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import UserInfo from "./components/UserInfo";
+import EditOrCreate from "./components/EditOrCreate";
+import BoardTop from "./components/BoardTop";
 import Board from "./components/Board";
+import { useRouter } from "next/navigation";
+import { useAuth } from "./utils/authFunctions";
+import { boardsFunctions } from "./utils/boardsFunction";
 
 export default function Home() {
-  const [regiOrLogin, setRegiOrLogin] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    setIsLoggedIn(!!token);
-  }, []);
-  const handleLoginStatus = (status: boolean) => {
-    setIsLoggedIn(status);
+  const router = useRouter();
+  const {
+    handleLoginStatus,
+    handleLogout,
+    handleRegiOrLogin,
+    isLoggedIn,
+    regiOrLogin,
+  } = useAuth();
+  const {
+    boards,
+    fetchBoards,
+    pageSize,
+    totalCount,
+    categories,
+    category,
+    createCategories,
+    page,
+    setCategory,
+    setPage,
+    user,
+    handleDelete,
+    isWriting,
+    setContent,
+    setEditMode,
+    setIsWriting,
+    setTitle,
+    editMode,
+    setCreateCategory,
+    content,
+    title,
+    createCategory,
+    handleSubmit,
+    handleUpdate,
+    setEditBoardId,
+  } = boardsFunctions();
+
+  const isWritingHandler = () => {
+    setIsWriting(!isWriting);
+    setEditMode(false);
+    setTitle("");
+    setContent("");
   };
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("username");
-    localStorage.removeItem("email");
-    localStorage.removeItem("userId");
-    setIsLoggedIn(false);
+  const handleCreateCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCreateCategory(e.currentTarget.value);
   };
-  useEffect(() => {
-    if (localStorage.getItem("accessToken")) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-  const handleRegiOrLogin = () => {
-    setRegiOrLogin(!regiOrLogin);
+
+  const handleEdit = (board: Board) => {
+    setEditMode(true);
+    setIsWriting(true);
+    setEditBoardId(board._id);
+    setTitle(board.title);
+    setContent(board.content);
+  };
+
+  const handlePostClick = (
+    _id: string,
+    category: string,
+    authorId: string,
+    createdAt: Date,
+    title: string,
+    content: string,
+    userId: string
+  ) => {
+    router &&
+      router.push(
+        `/${_id}?category=${encodeURIComponent(
+          category
+        )}&authorId=${encodeURIComponent(
+          authorId
+        )}&createdAt=${encodeURIComponent(
+          createdAt.toLocaleString()
+        )}&title=${encodeURIComponent(title)}&content=${encodeURIComponent(
+          content
+        )}&userId=${encodeURIComponent(userId)}
+        `
+      );
+  };
+
+  const handleCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategory(e.currentTarget.value);
+    fetchBoards(1, pageSize, e.currentTarget.value);
+  };
+
+  const props = {
+    handleUpdate,
+    handleSubmit,
+    handleCreateCategory,
+    title,
+    setTitle,
+    content,
+    setContent,
+    createCategories,
+    createCategory,
+    boards,
+    fetchBoards,
+    pageSize,
+    totalCount,
+    categories,
+    category,
+    page,
+    setCategory,
+    setPage,
+    user,
+    handleDelete,
+    setIsWriting,
+    setEditMode,
+    isWriting,
+    setCreateCategory,
+    editMode,
+    setEditBoardId,
   };
   return (
     <>
       {isLoggedIn ? (
-        <div className="allContainer flex w-full h-full gap-5">
-          <Board logout={handleLogout} />
+        <div className="allContainer flex w-full h-full gap-4">
+          <div className="bg-white boardContainer flex flex-col justify-between w-full border border-black rounded-md py-4 h-full">
+            <BoardTop
+              category={category}
+              editMode={editMode}
+              isWriting={isWriting}
+              isWritingHandler={isWritingHandler}
+            />
+            {isWriting ? (
+              <EditOrCreate {...props} />
+            ) : (
+              <Board
+                {...props}
+                handleCategory={handleCategory}
+                handleEdit={handleEdit}
+                handlePostClick={handlePostClick}
+              />
+            )}
+          </div>
           <UserInfo handleLogout={handleLogout} />
         </div>
       ) : (

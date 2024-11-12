@@ -1,7 +1,8 @@
-"use client"
+"use client";
 import { useState } from "react";
-import api from "../api";
+import api from "../utils/api";
 import Button from "./Button";
+import { AxiosError } from "axios";
 type SignInProps = {
   onLogin: (isLoggedIn: boolean) => void;
 };
@@ -22,8 +23,18 @@ const SignIn = ({ onLogin }: SignInProps) => {
       localStorage.setItem("userId", userId);
       onLogin(true);
     } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error.response) {
+          const errorMessage = error.response.data.message;
+          alert(errorMessage);
+        } else {
+          console.error("네트워크 오류:", error);
+          alert(
+            "서버와의 연결에 문제가 발생했습니다. 나중에 다시 시도해주세요."
+          );
+        }
+      }
       console.error("로그인 중 오류:", error);
-      alert("로그인 실패");
     }
   };
 
@@ -45,7 +56,7 @@ const SignIn = ({ onLogin }: SignInProps) => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <Button text="로그인" type="submit"/>
+        <Button text="로그인" type="submit" />
       </form>
     </>
   );

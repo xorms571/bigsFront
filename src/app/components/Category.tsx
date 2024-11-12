@@ -1,5 +1,5 @@
 type CategoryProps = {
-  handleCategory: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleCategory?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   categories: string[];
   category: string;
 };

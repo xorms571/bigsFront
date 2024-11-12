@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import api from "../api";
+import api from "../utils/api";
 import Button from "./Button";
 import { AxiosError } from "axios";
 type SignUpProps = {
@@ -27,26 +27,8 @@ const SignUp = ({ handleRegiOrLogin }: SignUpProps) => {
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         if (error.response) {
-          const errorCode = error.response.data.code;
           const errorMessage = error.response.data.message;
-          switch (errorCode) {
-            case "MISSING_FIELDS":
-              alert(errorMessage);
-              break;
-            case "PASSWORD_MISMATCH":
-              alert(errorMessage);
-              break;
-            case "INVALID_PASSWORD":
-              alert(
-                errorMessage
-              );
-              break;
-            case "EMAIL_EXISTS":
-              alert(errorMessage);
-              break;
-            default:
-              alert(errorMessage);
-          }
+          alert(errorMessage);
         } else {
           console.error("네트워크 오류:", error);
           alert(
