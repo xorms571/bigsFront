@@ -2,7 +2,7 @@ import Category from "./Category";
 import Button from "./Button";
 import Pagination from "./Pagination";
 import type { Board, User } from "../utils/interface";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 type BoardProps = {
   categories: string[];
   category: string;
@@ -57,13 +57,13 @@ const Board = ({
       setPage(page + 1);
     }
   };
-  
+
   const handlePrevPage = () => {
     if (page > 1) {
       setPage(page - 1);
     }
   };
-  
+
   const props = {
     handleNextPage,
     handlePrevPage,
