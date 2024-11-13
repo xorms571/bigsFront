@@ -1,5 +1,4 @@
 import Category from "./Category";
-import Button from "./Button";
 import Pagination from "./Pagination";
 import type { BoardProps2 } from "../utils/interface";
 import { useEffect } from "react";
