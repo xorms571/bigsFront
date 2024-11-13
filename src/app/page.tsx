@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "./utils/authFunctions";
 import { useBoards } from "./utils/boardsFunctions";
 import { useEffect } from "react";
+import { BoardProps1 } from "./utils/interface";
 
 export default function Home() {
   const router = useRouter();
@@ -59,7 +60,7 @@ export default function Home() {
     setCreateCategory(e.currentTarget.value);
   };
 
-  const handleEdit = (board: Board) => {
+  const handleEdit = (board: BoardProps1) => {
     setEditMode(true);
     setIsWriting(true);
     setEditBoardId(board._id);

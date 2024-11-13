@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Board, User } from "./interface";
+import { BoardProps1, User } from "./interface";
 import { AxiosError } from "axios";
 import api from "./api";
 import { useAuth } from "./authFunctions";
 
 export const useBoards = () => {
   const pageSize = 6;
-  const [boards, setBoards] = useState<Board[]>([]);
+  const [boards, setBoards] = useState<BoardProps1[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [page, setPage] = useState(1);
   const createCategories = ["notice", "free"];
