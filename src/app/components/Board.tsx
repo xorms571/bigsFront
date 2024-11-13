@@ -1,14 +1,11 @@
 import Category from "./Category";
 import Button from "./Button";
 import Pagination from "./Pagination";
-import type { Board, User } from "../utils/interface";
-import { Dispatch, SetStateAction } from "react";
+import type { Board } from "../utils/interface";
+import { useEffect } from "react";
+import { useBoards } from "../utils/boardsFunctions";
 type BoardProps = {
-  categories: string[];
-  category: string;
   handleCategory: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  boards: Board[];
-  user: User | null;
   handlePostClick: (
     _id: string,
     category: string,
@@ -19,26 +16,20 @@ type BoardProps = {
     userId: string
   ) => void;
   handleEdit: (board: Board) => void;
-  handleDelete: (boardId: string) => Promise<void>;
-  page: number;
-  setPage: Dispatch<SetStateAction<number>>;
-  totalCount: number;
-  pageSize: number;
 };
-const Board = ({
-  categories,
-  category,
-  handleCategory,
-  boards,
-  user,
-  handlePostClick,
-  handleEdit,
-  handleDelete,
-  page,
-  pageSize,
-  setPage,
-  totalCount,
-}: BoardProps) => {
+const Board = ({ handleCategory, handlePostClick, handleEdit }: BoardProps) => {
+  const {
+    boards,
+    fetchBoards,
+    pageSize,
+    totalCount,
+    categories,
+    category,
+    page,
+    setPage,
+    user,
+    handleDelete,
+  } = useBoards();
   const totalPages = Math.ceil(totalCount / pageSize);
   const maxPageDisplay = 3;
   const getPageNumbers = () => {
@@ -63,6 +54,10 @@ const Board = ({
       setPage(page - 1);
     }
   };
+
+  useEffect(() => {
+    fetchBoards(page, pageSize, category);
+  }, []);
 
   const props = {
     handleNextPage,
